@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kg + g to Total Grams Calculator</title>
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #1a202c;
+      --muted: #4a5568;
+      --accent: #2563eb;
+      --ring: rgba(37, 99, 235, 0.25);
+      --shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.05);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(165deg, #eef2ff 0%, #f7fafc 30%, #f7fafc 100%);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px;
+    }
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      letter-spacing: 0.2px;
+    }
+    p.lead {
+      margin: 0 0 20px 0;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .group {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .group h2 {
+      font-size: 1rem;
+      margin: 0 0 12px 0;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 12px;
+      align-items: center;
+      margin: 6px 0;
+    }
+    label {
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+    .hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 1rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      background: #fff;
+      -moz-appearance: textfield;
+    }
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .totals {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+    }
+    .totals h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.05rem;
+    }
+    .big {
+      font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+      font-weight: 800;
+    }
+    .breakdown {
+      margin-top: 8px;
+      color: #374151;
+      font-size: 0.95rem;
+    }
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      appearance: none;
+      border: none;
+      background: var(--accent);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      transition: transform 0.06s ease, filter 0.15s ease;
+    }
+    button:hover { filter: brightness(1.08); }
+    button:active { transform: translateY(1px); }
+    .ghost {
+      background: #eef2ff;
+      color: #1e40af;
+    }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 18px;
+    }
+    .inline {
+      display: inline-flex;
+      gap: 8px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Kg + g → Total Grams Calculator</h1>
+      <p class="lead">Enter how many of each mass you have. We’ll add it all up to one number in <strong>grams</strong>.</p>
+
+      <div class="grid">
+        <div class="group" aria-labelledby="kg-label">
+          <h2 id="kg-label">Kilogram masses</h2>
+          <div class="row">
+            <label for="kg5">Count of 5&nbsp;kg</label>
+            <input id="kg5" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g., 2" />
+          </div>
+          <div class="row">
+            <label for="kg1">Count of 1&nbsp;kg</label>
+            <input id="kg1" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g., 3" />
+          </div>
+        </div>
+
+        <div class="group" aria-labelledby="g-label">
+          <h2 id="g-label">Gram masses</h2>
+          <div class="row">
+            <label for="g100">Count of 100&nbsp;g</label>
+            <input id="g100" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g., 4" />
+          </div>
+          <div class="row">
+            <label for="g50">Count of 50&nbsp;g</label>
+            <input id="g50" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g., 1" />
+          </div>
+          <div class="row">
+            <label for="g10">Count of 10&nbsp;g</label>
+            <input id="g10" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g., 7" />
+          </div>
+        </div>
+      </div>
+
+      <div class="totals" role="status" aria-live="polite">
+        <h3>Total</h3>
+        <div class="inline">
+          <div class="big">= <span id="totalGrams" class="mono">0</span> g</div>
+        </div>
+        <div class="breakdown" id="breakdown"></div>
+      </div>
+
+      <div class="actions">
+        <button id="resetBtn" class="ghost" title="Clear all inputs">Reset</button>
+        <button id="copyBtn" title="Copy total grams">Copy total</button>
+      </div>
+
+      <div class="footer">
+        Tip: If you enter <span class="mono">2</span> in <em>Count of 5 kg</em>, that means <span class="mono">10,000 g</span> from 5 kg masses.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const inputs = {
+      kg5: document.getElementById('kg5'),
+      kg1: document.getElementById('kg1'),
+      g100: document.getElementById('g100'),
+      g50: document.getElementById('g50'),
+      g10: document.getElementById('g10'),
+    };
+
+    const totalGramsEl = document.getElementById('totalGrams');
+    const breakdownEl = document.getElementById('breakdown');
+    const resetBtn = document.getElementById('resetBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function toInt(value) {
+      const n = parseInt(value, 10);
+      return Number.isFinite(n) && n >= 0 ? n : 0;
+    }
+
+    function recalc() {
+      const counts = {
+        kg5: toInt(inputs.kg5.value),
+        kg1: toInt(inputs.kg1.value),
+        g100: toInt(inputs.g100.value),
+        g50: toInt(inputs.g50.value),
+        g10: toInt(inputs.g10.value),
+      };
+
+      const gramsFromKg5 = counts.kg5 * 5000;
+      const gramsFromKg1 = counts.kg1 * 1000;
+      const gramsFrom100 = counts.g100 * 100;
+      const gramsFrom50 = counts.g50 * 50;
+      const gramsFrom10 = counts.g10 * 10;
+
+      const total = gramsFromKg5 + gramsFromKg1 + gramsFrom100 + gramsFrom50 + gramsFrom10;
+
+      totalGramsEl.textContent = total.toLocaleString();
+
+      // Build breakdown text (show only nonzero lines)
+      const parts = [];
+      if (counts.kg5) parts.push(`${counts.kg5} × 5 kg = ${gramsFromKg5.toLocaleString()} g`);
+      if (counts.kg1) parts.push(`${counts.kg1} × 1 kg = ${gramsFromKg1.toLocaleString()} g`);
+      if (counts.g100) parts.push(`${counts.g100} × 100 g = ${gramsFrom100.toLocaleString()} g`);
+      if (counts.g50) parts.push(`${counts.g50} × 50 g = ${gramsFrom50.toLocaleString()} g`);
+      if (counts.g10) parts.push(`${counts.g10} × 10 g = ${gramsFrom10.toLocaleString()} g`);
+
+      breakdownEl.textContent = parts.length ? `Breakdown: ${parts.join("  •  ")}` : "";
+    }
+
+    Object.values(inputs).forEach((el) => {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      Object.values(inputs).forEach((el) => (el.value = ""));
+      recalc();
+      inputs.kg5.focus();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const text = totalGramsEl.textContent.replace(/,/g, '');
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy total"), 1200);
+      } catch {
+        // Fallback
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy total"), 1200);
+      }
+    });
+
+    // Initialize
+    recalc();
+  </script>
+</body>
+</html>
